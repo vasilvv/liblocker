@@ -1,4 +1,4 @@
-debathena-liblocker (10.1-0debathena1) UNRELEASED; urgency=low
+debathena-liblocker (10.1-0debathena1) unstable; urgency=low
 
   [ Jonathan Reed ]
   * Switch from control.in to control (Trac: #561)
@@ -11,8 +11,10 @@ debathena-liblocker (10.1-0debathena1) UNRELEASED; urgency=low
   * Provide a pkg-config file
   * Switch from pioctl to k_pioctl
   * Don't build for squeeze and lucid, OpenAFS 1.4 is too old
+  * Add git-buildpackage configuration
+  * Set source format to 3.0 (quilt)
 
- -- Jonathan Reed <jdreed@mit.edu>  Wed, 03 Apr 2013 14:01:56 -0400
+ -- Alexander Chernyakhovsky <achernya@mit.edu>  Sat, 28 Sep 2013 23:44:38 -0400
 
 debathena-liblocker (10.0.2-0debathena1) unstable; urgency=low
 
