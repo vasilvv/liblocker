@@ -41,9 +41,6 @@ AC_CHECK_FUNCS([alarm dup2 ftruncate getcwd gethostbyaddr gethostbyname inet_nto
 PKG_CHECK_MODULES([HESIOD], [hesiod])
 AC_SUBST([HESIOD_CFLAGS])
 AC_SUBST([HESIOD_LIBS])
-PKG_CHECK_MODULES([ZEPHYR], [zephyr])
-AC_SUBST([ZEPHYR_CFLAGS])
-AC_SUBST([ZEPHYR_LIBS])
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile

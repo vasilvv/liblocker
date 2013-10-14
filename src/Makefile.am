@@ -21,7 +21,7 @@ liblocker_la_SOURCES = \
 	util.c \
 	zephyr.c
 
-liblocker_la_LIBADD = @KRB5_LIBS@ @HESIOD_LIBS@ @ZEPHYR_LIBS@
+liblocker_la_LIBADD = @KRB5_LIBS@ @HESIOD_LIBS@
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = liblocker.pc

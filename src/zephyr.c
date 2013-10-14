@@ -24,7 +24,6 @@ static const char rcsid[] = "$Id: zephyr.c,v 1.7 2003-11-04 19:21:12 ghudson Exp
 #include <unistd.h>
 
 #include <com_err.h>
-#include <zephyr/zephyr.h>
 
 #include "locker.h"
 #include "locker_private.h"
@@ -34,66 +33,8 @@ static const char rcsid[] = "$Id: zephyr.c,v 1.7 2003-11-04 19:21:12 ghudson Exp
 
 int locker_do_zsubs(locker_context context, int op)
 {
-  int wgport;
-  ZSubscription_t zsubs[ZEPHYR_MAXONEPACKET];
-  int i, j, status, retval;
-  uid_t uid = geteuid();
-
-  if (!context->zsubs)
-    return LOCKER_SUCCESS;
-
-  /* Initialize Zephyr. (This can fail.) */
-  status = ZInitialize();
-  if (status)
-    {
-      locker__error(context, "Could not initialize Zephyr library: %s.\n",
-		    error_message(status));
-      return LOCKER_EZEPHYR;
-    }
-
-  wgport = ZGetWGPort();
-  if (wgport == -1)
-    {
-      locker__free_zsubs(context);
-      return LOCKER_EZEPHYR;
-    }
-
-  for (j = 0; j < ZEPHYR_MAXONEPACKET; j++)
-    {
-      zsubs[j].zsub_recipient = "*";
-      zsubs[j].zsub_class = LOCKER_ZEPHYR_CLASS;
-    }
-
-  /* seteuid since Zephyr ops may touch ticket file. */
-  if (uid != context->user)
-    seteuid(context->user);
-
-  retval = LOCKER_SUCCESS;
-  for (i = 0; i < context->nzsubs; i += j)
-    {
-      for (j = 0; j < ZEPHYR_MAXONEPACKET && i + j < context->nzsubs; j++)
-	zsubs[j].zsub_classinst = context->zsubs[i + j];
-
-      if (op == LOCKER_ZEPHYR_SUBSCRIBE)
-	status = ZSubscribeToSansDefaults(zsubs, j, wgport);
-      else
-	status = ZUnsubscribeTo(zsubs, j, wgport);
-      if (status)
-	{
-	  locker__error(context, "Error while %ssubscribing:\n%s.\n",
-			op == LOCKER_ZEPHYR_SUBSCRIBE ? "" : "un",
-			error_message(status));
-	  retval = LOCKER_EZEPHYR;
-	  break;
-	}
-    }
-
-  if (uid != context->user)
-    seteuid(uid);
-
   locker__free_zsubs(context);
-  ZClosePort();
-  return retval;
+  return LOCKER_SUCCESS;
 }
 
 int locker__add_zsubs(locker_context context, char **subs, int nsubs)
